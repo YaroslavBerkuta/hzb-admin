@@ -1,0 +1,5 @@
+export const config = {
+  API_URL: "http://localhost:3000",
+};
+
+export * from "./menu.config";
