@@ -19,13 +19,6 @@ export const getTranslate = <T>(translates: T[], lang: Lang) => {
   }
 };
 
-// export const compareTranslates = (translates: any[], translates2: any[], keys?: string[]) => {
-//   return _.isEqual(
-//     _.map(translates, (el) => _.omit(el, 'id')),
-//     _.map(translates2, (el) => _.omit(el, 'id')),
-//   )
-// }
-
 export const compareTranslates = (
   translates: any[],
   translates2: any[],

@@ -35,6 +35,11 @@ export const News = () => {
             />
           }
         >
+          <List.Item.Meta
+            title={
+              getTranslate<INewsTranslates>(item.translations, Lang.UA)?.name
+            }
+          />
           {
             getTranslate<INewsTranslates>(item.translations, Lang.UA)
               ?.description
