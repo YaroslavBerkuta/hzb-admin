@@ -12,14 +12,14 @@ interface IPrpos {
 
 export const Wrapper: FC<IPrpos> = ({ children }) => {
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout>
       <Sider breakpoint="lg" collapsedWidth="0">
         <div className={styles.logo}> HZB Admin Panel</div>
         <NavBar />
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: "white" }} />
-        <Content style={{ margin: "24px 16px 0", height: "100vh" }}>
+        <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
               padding: 24,
