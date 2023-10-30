@@ -1,53 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Tabs, Upload } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
-import { NewsForm } from "./components";
-import { useForm } from "../../hooks";
-import { Lang } from "../../typing/enums";
-import { defaultValue } from "./config";
-import { useState } from "react";
-import { saveNews } from "../../services/domains/news/index";
-import { isEmpty } from "lodash";
 import { PlusOutlined } from "@ant-design/icons";
-
-export const NewsDetails = () => {
+import { Button, Tabs, Upload } from "antd";
+import { isEmpty } from "lodash";
+import { useState } from "react";
+import { CreateAwardsForm } from "./components/createAwardsForm";
+import { Lang } from "../../typing/enums";
+import { useForm } from "../../hooks";
+import { saveAwards } from "../../services/domains/awards/index";
+import { defaultValue } from "./config";
+import { useNavigate } from "react-router-dom";
+export const NewAwards = () => {
   const [file, setFile] = useState<any>(null);
   const navigate = useNavigate();
 
-  const location = useLocation();
-  const { mod } = location.state;
-
   const { setField, onSubmit, values } = useForm(defaultValue, () => null);
-
-  const items = [
-    {
-      label: "Українська",
-      key: "ua",
-      children: (
-        <NewsForm defaultValues={values} setField={setField} lang={Lang.UA} />
-      ),
-    },
-    {
-      label: "Англійська",
-      key: "en",
-      children: (
-        <NewsForm defaultValues={values} setField={setField} lang={Lang.EN} />
-      ),
-    },
-  ];
-
-  const submit = async () => {
-    try {
-      if (mod === "create") {
-        await saveNews(values, file);
-      } else {
-        return;
-      }
-      navigate(`/news`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const uploadButton = (
     <div>
@@ -55,6 +21,40 @@ export const NewsDetails = () => {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+
+  const items = [
+    {
+      label: "Українська",
+      key: "ua",
+      children: (
+        <CreateAwardsForm
+          defaultValues={values}
+          setField={setField}
+          lang={Lang.UA}
+        />
+      ),
+    },
+    {
+      label: "Англійська",
+      key: "en",
+      children: (
+        <CreateAwardsForm
+          defaultValues={values}
+          setField={setField}
+          lang={Lang.EN}
+        />
+      ),
+    },
+  ];
+
+  const submit = async () => {
+    try {
+      await saveAwards(values, file);
+      navigate(`/awards`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>

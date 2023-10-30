@@ -1,24 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, List } from "antd";
+import { Button, List, message } from "antd";
 import { Lang } from "../../typing/enums";
 import { useFlatList } from "../../hooks";
 import { getTranslate } from "../../helpers/translate.helpers";
 import { awardsApi } from "../../api/awards";
+import { useNavigate } from "react-router-dom";
 import {
   IAwards,
   IAwardsTranslates,
 } from "../../typing/interfaces/awards.interface";
 
 export const Awards = () => {
-  const { items } = useFlatList<IAwards>({
+  const navigate = useNavigate();
+
+  const { items, resetFlatList } = useFlatList<IAwards>({
     fetchItems: awardsApi.getList,
     needInit: true,
     loadParams: {},
   });
 
+  const removeAwarads = async (id: number) => {
+    try {
+      await awardsApi.delete(id);
+      message.info("Нагороду видалено");
+      resetFlatList();
+    } catch (error) {
+      console.log(error);
+      message.error("Щось пішло не так");
+    }
+  };
+
   return (
     <>
-      <Button onClick={() => {}}>Нова нагорода</Button>
+      <Button onClick={() => navigate(`/awards/create`)}>Нова нагорода</Button>
 
       <List
         itemLayout="vertical"
@@ -32,7 +46,7 @@ export const Awards = () => {
           <List.Item
             key={item.id}
             actions={[
-              <Button onClick={() => {}} type="dashed">
+              <Button onClick={() => removeAwarads(item.id)} type="dashed">
                 Видалити новину
               </Button>,
             ]}

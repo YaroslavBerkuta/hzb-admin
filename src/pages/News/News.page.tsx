@@ -48,6 +48,7 @@ export const News = () => {
         pagination={{
           pageSize: 5,
           position: "top",
+          style: { marginBottom: 15 },
         }}
         dataSource={items}
         renderItem={(item: INews) => (

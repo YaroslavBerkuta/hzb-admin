@@ -1,5 +1,6 @@
 import {
   ContainerOutlined,
+  FullscreenOutlined,
   SmileOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
@@ -22,5 +23,11 @@ export const menuConfig = [
     key: "awards",
     path: "awards",
     icon: <SmileOutlined />,
+  },
+  {
+    label: "Дистрибютори",
+    key: "regions",
+    path: "regions",
+    icon: <FullscreenOutlined />,
   },
 ];

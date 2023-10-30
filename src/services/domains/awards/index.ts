@@ -1,20 +1,23 @@
+import {
+  finishUploadLinkReq,
+  getUploadLinkReq,
+} from "./../../../api/media/index";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { message } from "antd";
-import { newsApi } from "../../../api/news";
-import { presignedUploaderService } from "../../system/files.service";
-import { finishUploadLinkReq, getUploadLinkReq } from "../../../api/media";
+import { awardsApi } from "../../../api/awards";
 import { IFile } from "../../../typing";
+import { presignedUploaderService } from "../../system/files.service";
 
-export const saveNews = async (params: any, file: any) => {
+export const saveAwards = async (params: any, file: any) => {
   try {
-    const { data } = await newsApi.store(params);
+    const { data } = await awardsApi.create(params);
+
     if (file) {
       await saveFile(file, data.id);
     }
-    message.success("Новину створено");
+    message.success("Нагороду створено");
   } catch (error) {
-    console.log("news save error:", error);
+    console.log("Awards save error:", error);
     message.error("Щось пішло не так");
   }
 };
@@ -24,7 +27,7 @@ const saveFile = async (file: IFile, parentId: number) => {
     await presignedUploaderService.upload(
       file,
       (params: any) =>
-        getUploadLinkReq({ ...params, directory: "news", parentId }),
+        getUploadLinkReq({ ...params, directory: "awards", parentId }),
       (params: any) => finishUploadLinkReq(params)
     );
   } catch (error) {
