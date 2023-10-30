@@ -1,6 +1,7 @@
 import {
   ContainerOutlined,
   FullscreenOutlined,
+  OrderedListOutlined,
   SmileOutlined,
   StockOutlined,
   UnorderedListOutlined,
@@ -36,5 +37,11 @@ export const menuConfig = [
     key: "production",
     path: "production",
     icon: <StockOutlined />,
+  },
+  {
+    label: "Проекти",
+    key: "projects",
+    path: "projects",
+    icon: <OrderedListOutlined />,
   },
 ];

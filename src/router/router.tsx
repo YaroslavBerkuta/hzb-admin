@@ -10,6 +10,7 @@ import {
   CreateRegion,
   Production,
   NewProduction,
+  Projects,
 } from "../pages";
 import { NewsDetails } from "../pages/News/NewsDetails.page";
 import { Awards } from "../pages/Awards/Awards.page";
@@ -37,7 +38,8 @@ export const Router = () => {
         <Route element={<Regions />} path="/regions" />
         <Route element={<CreateRegion />} path="/regions/create" />
         <Route element={<Production />} path="/production" />
-        <Route element={<NewProduction />} path="/production/create" />
+        <Route element={<Projects />} path="/projects" />
+        <Route element={<NewProduction />} path="/projects/create" />
       </Routes>
     </Wrapper>
   );
