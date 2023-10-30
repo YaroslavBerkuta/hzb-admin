@@ -2,7 +2,15 @@ import { useSelector } from "react-redux";
 import { selectAccount } from "../store/account/selectors";
 import { Route, Routes } from "react-router-dom";
 import { Wrapper } from "../components";
-import { Dashboard, News, Auth, Regions, CreateRegion } from "../pages";
+import {
+  Dashboard,
+  News,
+  Auth,
+  Regions,
+  CreateRegion,
+  Production,
+  NewProduction,
+} from "../pages";
 import { NewsDetails } from "../pages/News/NewsDetails.page";
 import { Awards } from "../pages/Awards/Awards.page";
 import { NewAwards } from "../pages/Awards/NewAwards.page";
@@ -28,6 +36,8 @@ export const Router = () => {
         <Route element={<NewAwards />} path="/awards/create" />
         <Route element={<Regions />} path="/regions" />
         <Route element={<CreateRegion />} path="/regions/create" />
+        <Route element={<Production />} path="/production" />
+        <Route element={<NewProduction />} path="/production/create" />
       </Routes>
     </Wrapper>
   );

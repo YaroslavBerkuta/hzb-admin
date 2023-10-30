@@ -2,6 +2,7 @@ import {
   ContainerOutlined,
   FullscreenOutlined,
   SmileOutlined,
+  StockOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
 
@@ -29,5 +30,11 @@ export const menuConfig = [
     key: "regions",
     path: "regions",
     icon: <FullscreenOutlined />,
+  },
+  {
+    label: "Виробничі потужності",
+    key: "production",
+    path: "production",
+    icon: <StockOutlined />,
   },
 ];
