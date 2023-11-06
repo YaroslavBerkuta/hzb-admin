@@ -1,4 +1,5 @@
 import {
+  CheckOutlined,
   ContainerOutlined,
   FullscreenOutlined,
   OrderedListOutlined,
@@ -43,5 +44,11 @@ export const menuConfig = [
     key: "projects",
     path: "projects",
     icon: <OrderedListOutlined />,
+  },
+  {
+    label: "Система управління якістю",
+    key: "quality",
+    path: "quality",
+    icon: <CheckOutlined />,
   },
 ];

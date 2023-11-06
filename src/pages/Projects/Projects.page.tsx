@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from "react-router-dom";
 import { useFlatList } from "../../hooks";
-import { Button, List, Skeleton } from "antd";
+import { Button, List, Skeleton, message } from "antd";
 import { Lang } from "../../typing/enums";
 import { getTranslate } from "../../helpers/translate.helpers";
 import { IProject, IProjectTranslates } from "../../typing";
@@ -15,13 +15,24 @@ export const Projects = () => {
   });
   const navigate = useNavigate();
 
+  const remove = async (id: number) => {
+    try {
+      await projectApi.remove(id);
+      resetFlatList();
+      message.success("Проект видалено");
+    } catch (error) {
+      console.log(error);
+      message.error("Щось пішло нетак");
+    }
+  };
+
   if (isLoading) {
     return <Skeleton />;
   }
 
   return (
     <div>
-      <Button onClick={() => navigate(`/projects`)}>Новий проект</Button>
+      <Button onClick={() => navigate(`/projects/create`)}>Новий проект</Button>
       <List
         itemLayout="vertical"
         size="default"
@@ -35,7 +46,7 @@ export const Projects = () => {
           <List.Item
             key={item.id}
             actions={[
-              <Button onClick={() => {}} type="dashed">
+              <Button onClick={() => remove(item.id)} type="dashed">
                 Видалити новину
               </Button>,
             ]}

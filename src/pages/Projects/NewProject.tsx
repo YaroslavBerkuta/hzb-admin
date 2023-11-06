@@ -1,24 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks";
-import { CreateProductionForm } from "./components/CreateProductionForm";
-import { Lang } from "../../typing/enums";
-import { Button, Tabs, Upload, UploadProps } from "antd";
-import { defaultValues } from "./config";
-import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { createProduction } from "../../services/domains/production/index";
+import { Button, Tabs, Upload } from "antd";
+import { isEmpty } from "lodash";
+import { ProjectForm } from "./components/ProjectForm";
+import { Lang } from "../../typing/enums";
+import { defaultValues } from "./config";
+import { createProject } from "../../services/domains/project";
 
-export const NewProduction = () => {
+export const NewProject = () => {
+  const [file, setFile] = useState<any>(null);
   const navigate = useNavigate();
-  const [fileList, setFileList] = useState<any>([]);
 
   const { setField, onSubmit, values } = useForm(defaultValues, () => null);
 
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
   const submit = async () => {
     try {
-      await createProduction(values, fileList);
-      navigate("/production");
+      await createProject(values, file);
+      navigate("/projects");
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +37,7 @@ export const NewProduction = () => {
       label: "Українська",
       key: "ua",
       children: (
-        <CreateProductionForm
+        <ProjectForm
           defaultValues={values}
           setField={setField}
           lang={Lang.UA}
@@ -40,7 +48,7 @@ export const NewProduction = () => {
       label: "Англійська",
       key: "en",
       children: (
-        <CreateProductionForm
+        <ProjectForm
           defaultValues={values}
           setField={setField}
           lang={Lang.EN}
@@ -49,25 +57,18 @@ export const NewProduction = () => {
     },
   ];
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
-
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-    setFileList(newFileList);
-
   return (
     <div>
       <Upload
+        multiple={true}
         listType="picture-card"
-        fileList={fileList}
-        onChange={handleChange}
+        onChange={({ file }) => {
+          setFile(file.originFileObj);
+        }}
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {!isEmpty(file) ? null : uploadButton}
       </Upload>
+
       <Tabs
         defaultActiveKey="1"
         type="card"
