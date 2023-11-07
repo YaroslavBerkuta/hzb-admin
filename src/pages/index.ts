@@ -8,3 +8,4 @@ export * from "./Production/NewProduction.page";
 export * from "./Projects/Projects.page";
 export * from "./Projects/NewProject";
 export * from "./Quality/Quality";
+export * from "./Labolatory/Labolatory"

@@ -1,23 +1,22 @@
 import { useNavigate } from "react-router-dom";
+import { labolatoryApi } from "../../api/labolatory";
 import { useFlatList } from "../../hooks";
+import { ILabolatory, ILabolatoryTranslate } from "../../typing";
 import { Button, List, message } from "antd";
-import { Lang } from "../../typing/enums";
 import { getTranslate } from "../../helpers/translate.helpers";
-import { IQuality, IQualityTranslate } from "../../typing";
-import { qualityApi } from "../../api/quality";
+import { Lang } from "../../typing/enums";
 
-export const Quality = () => {
+export const Labolatory = () => {
   const navigate = useNavigate();
-
-  const { items, resetFlatList } = useFlatList<IQuality>({
-    fetchItems: qualityApi.getList,
+  const { items, resetFlatList } = useFlatList<ILabolatory>({
+    fetchItems: labolatoryApi.getList,
     needInit: true,
     loadParams: {},
   });
 
-  const removeQuality = async (id: number) => {
+  const removeLabolatory = async (id: number) => {
     try {
-      await qualityApi.remove(id);
+      await labolatoryApi.remove(id);
       message.info("Створено");
       resetFlatList();
     } catch (error) {
@@ -28,7 +27,9 @@ export const Quality = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate(`/quality/create`)}>Новий запис</Button>
+      <Button onClick={() => navigate(`/labolatory/create`)}>
+        Новий запис
+      </Button>
       <List
         itemLayout="vertical"
         size="default"
@@ -37,11 +38,11 @@ export const Quality = () => {
           position: "top",
         }}
         dataSource={items}
-        renderItem={(item: IQuality) => (
+        renderItem={(item: ILabolatory) => (
           <List.Item
             key={item.id}
             actions={[
-              <Button onClick={() => removeQuality(item.id)} type="dashed">
+              <Button onClick={() => removeLabolatory(item.id)} type="dashed">
                 Видалити новину
               </Button>,
             ]}
@@ -57,12 +58,12 @@ export const Quality = () => {
           >
             <List.Item.Meta
               title={
-                getTranslate<IQualityTranslate>(item.translations, Lang.UA)
+                getTranslate<ILabolatoryTranslate>(item.translations, Lang.UA)
                   ?.name
               }
             />
             {
-              getTranslate<IQualityTranslate>(item.translations, Lang.UA)
+              getTranslate<ILabolatoryTranslate>(item.translations, Lang.UA)
                 ?.description
             }
           </List.Item>

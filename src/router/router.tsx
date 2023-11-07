@@ -13,10 +13,13 @@ import {
   NewProject,
   NewProduction,
   Quality,
+  Labolatory,
 } from "../pages";
 import { NewsDetails } from "../pages/News/NewsDetails.page";
 import { Awards } from "../pages/Awards/Awards.page";
 import { NewAwards } from "../pages/Awards/NewAwards.page";
+import { NewQuality } from "../pages/Quality/NewQuality";
+import { NewLabolatory } from "../pages/Labolatory/NewLabolatory";
 
 export const Router = () => {
   const user = useSelector(selectAccount);
@@ -44,6 +47,9 @@ export const Router = () => {
         <Route element={<Projects />} path="/projects" />
         <Route element={<NewProject />} path="/projects/create" />
         <Route element={<Quality />} path="/quality" />
+        <Route element={<NewQuality />} path="/quality/create" />
+        <Route element={<Labolatory />} path="/labolatory" />
+        <Route element={<NewLabolatory />} path="/labolatory/create" />
       </Routes>
     </Wrapper>
   );

@@ -3,6 +3,7 @@ import {
   ContainerOutlined,
   FullscreenOutlined,
   OrderedListOutlined,
+  RocketOutlined,
   SmileOutlined,
   StockOutlined,
   UnorderedListOutlined,
@@ -50,5 +51,11 @@ export const menuConfig = [
     key: "quality",
     path: "quality",
     icon: <CheckOutlined />,
+  },
+  {
+    label: "Випробувальна Лаболаторія",
+    key: "labolatory",
+    path: "labolatory",
+    icon: <RocketOutlined />,
   },
 ];
