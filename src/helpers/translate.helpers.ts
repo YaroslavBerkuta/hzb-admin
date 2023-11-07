@@ -7,10 +7,10 @@ export const getTranslate = <T>(translates: T[], lang: Lang) => {
     if (!translates || _.isEmpty(translates)) return {} as any as T;
     if (translates.length === 1) return translates[0];
 
-    const item = translates.find((it) => it?.lang === lang);
+    const item = translates.find((it: any) => it?.lang === lang);
     if (item) return item;
 
-    const enItem = translates.find((it) => it?.lang === Lang.EN);
+    const enItem = translates.find((it: any) => it?.lang === Lang.EN);
     if (enItem) return enItem;
 
     return translates[0];

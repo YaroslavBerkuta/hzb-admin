@@ -35,7 +35,7 @@ export interface IForm<T> {
  */
 export const useForm = <T extends IUseFormState>(
   initValue: Partial<T>,
-  validateMethod: IValidateMethod<T>
+  validateMethod: IValidateMethod<T> | any
 ): IForm<T> => {
   const [values, setForm] = useState(initValue as T);
   const [errors, setErrors] = useState<FormErrors<T>>({});

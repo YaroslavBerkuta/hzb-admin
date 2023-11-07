@@ -6,8 +6,10 @@ interface IProps<T> {
   limit?: number;
   page?: number;
   fetchItems: (...arr: any[]) => any;
-  serrializatorResponse?: <S>(data: S) => S;
-  serrializatorItems?: (items: ReturnType<IProps<T>["fetchItems"]>) => T[];
+  serrializatorResponse?: (<S>(data: S) => S) | any;
+  serrializatorItems?:
+    | ((items: ReturnType<IProps<T>["fetchItems"]>) => T[])
+    | any;
   loadParams?: { [key: string]: string | number | boolean };
   needInit: boolean;
   clearWhenReload?: boolean;
@@ -47,7 +49,7 @@ export const useFlatList = <T>(props: IProps<T>) => {
 
   const blockLoadingRef = useRef(false);
 
-  const [items, setItems] = useState<T[]>(props.defaultItems);
+  const [items, setItems] = useState<T[]>(props.defaultItems || []);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setLoading] = useState(props.defaultLoading);
   const [isLoadingNext, setIsLoadingNext] = useState(false);

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC } from "react";
+import { FC } from "react";
 import { Lang } from "../../../typing/enums";
 import { find } from "lodash";
 import { Input } from "antd";

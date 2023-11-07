@@ -11,7 +11,7 @@ export const isApiError = (e: any): boolean => {
 
 export const isErrorStatus = (res: AxiosError, status: number) => {
   try {
-    return res.response.status === status;
+    return res?.response?.status === status;
   } catch (e) {
     return false;
   }
@@ -19,7 +19,7 @@ export const isErrorStatus = (res: AxiosError, status: number) => {
 
 export const getDataFromApiError = (e: AxiosError) => {
   try {
-    return e.response.data;
+    return e?.response?.data;
   } catch (e) {
     return null;
   }
@@ -62,5 +62,5 @@ export const appendToFormDate = (
     Object.keys(obj).map((key) => {
       formData.append(`${startKey}.${key}`, obj[key]);
     });
-  } else formData.append(startKey, obj);
+  } else formData.append(startKey || "", obj);
 };
