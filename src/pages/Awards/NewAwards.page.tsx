@@ -2,18 +2,29 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Tabs, Upload } from "antd";
 import { isEmpty } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateAwardsForm } from "./components/createAwardsForm";
 import { Lang } from "../../typing/enums";
 import { useForm } from "../../hooks";
-import { saveAwards } from "../../services/domains/awards/index";
+import { saveAwards, updateAwards } from "../../services/domains/awards/index";
 import { defaultValue } from "./config";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 export const NewAwards = () => {
   const [file, setFile] = useState<any>(null);
   const navigate = useNavigate();
 
-  const { setField, onSubmit, values } = useForm(defaultValue, () => null);
+  const location = useLocation();
+  const { mod, data } = location.state;
+
+  const { setField, onSubmit, values } = useForm(
+    isEmpty(data) ? defaultValue : data,
+    () => null
+  );
+
+  useEffect(() => {
+    data?.cover &&
+      setFile(data.cover.map((it: any) => ({ ...it, url: it.fileUrl })));
+  }, [data]);
 
   const uploadButton = (
     <div>
@@ -49,7 +60,13 @@ export const NewAwards = () => {
 
   const submit = async () => {
     try {
-      await saveAwards(values, file);
+      if (mod === "create") {
+        console.log("create");
+        await saveAwards(values, file);
+      } else {
+        console.log("update");
+        await updateAwards(data.id, values);
+      }
       navigate(`/awards`);
     } catch (error) {
       console.log(error);

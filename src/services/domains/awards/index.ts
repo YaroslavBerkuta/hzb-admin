@@ -22,6 +22,15 @@ export const saveAwards = async (params: any, file: any) => {
   }
 };
 
+export const updateAwards = async (id: number, params: any) => {
+  try {
+    await awardsApi.update(id, params);
+  } catch (error) {
+    console.log("news save error:", error);
+    message.error("Щось пішло не так");
+  }
+};
+
 const saveFile = async (file: IFile, parentId: number) => {
   try {
     await presignedUploaderService.upload(

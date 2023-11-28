@@ -13,6 +13,9 @@ class AwardsApi {
   delete(id: number) {
     return http.delete<void>(`admin/awards/${id}`);
   }
+  update(id: number, data: any) {
+    return http.patch<any>(`admin/awards/${id}`, data);
+  }
 }
 
 export const awardsApi = new AwardsApi();

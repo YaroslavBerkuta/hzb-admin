@@ -5,8 +5,8 @@ import { NewsForm } from "./components";
 import { useForm } from "../../hooks";
 import { Lang } from "../../typing/enums";
 import { defaultValue } from "./config";
-import { useState } from "react";
-import { saveNews } from "../../services/domains/news/index";
+import { useEffect, useState } from "react";
+import { saveNews, updateNews } from "../../services/domains/news/index";
 import { isEmpty } from "lodash";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -15,9 +15,17 @@ export const NewsDetails = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const { mod } = location.state;
+  const { mod, data } = location.state;
 
-  const { setField, onSubmit, values } = useForm(defaultValue, () => null);
+  useEffect(() => {
+    data?.cover &&
+      setFile(data.cover.map((it: any) => ({ ...it, url: it.fileUrl })));
+  }, [data]);
+
+  const { setField, onSubmit, values } = useForm(
+    isEmpty(data) ? defaultValue : data,
+    () => null
+  );
 
   const items = [
     {
@@ -39,9 +47,11 @@ export const NewsDetails = () => {
   const submit = async () => {
     try {
       if (mod === "create") {
+        console.log('create')
         await saveNews(values, file);
       } else {
-        return;
+        console.log('update')
+        await updateNews(data.id, values);
       }
       navigate(`/news`);
     } catch (error) {
@@ -62,7 +72,6 @@ export const NewsDetails = () => {
         multiple={true}
         listType="picture-card"
         onChange={({ file }) => {
-          console.log(file);
           setFile(file.originFileObj);
         }}
       >

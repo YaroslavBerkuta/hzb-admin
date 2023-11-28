@@ -3,7 +3,10 @@
 import { message } from "antd";
 import { newsApi } from "../../../api/news";
 import { presignedUploaderService } from "../../system/files.service";
-import { finishUploadLinkReq, getUploadLinkReq } from "../../../api/media";
+import {
+  finishUploadLinkReq,
+  getUploadLinkReq,
+} from "../../../api/media";
 import { IFile } from "../../../typing";
 
 export const saveNews = async (params: any, file: any) => {
@@ -13,6 +16,15 @@ export const saveNews = async (params: any, file: any) => {
       await saveFile(file, data.id);
     }
     message.success("Новину створено");
+  } catch (error) {
+    console.log("news save error:", error);
+    message.error("Щось пішло не так");
+  }
+};
+
+export const updateNews = async (id: number, params: any) => {
+  try {
+    await newsApi.update(id, params);
   } catch (error) {
     console.log("news save error:", error);
     message.error("Щось пішло не так");

@@ -16,3 +16,7 @@ export const getUploadLinkReq = (payload: GetLinkToUploadFilePayload) => {
 export const finishUploadLinkReq = (payload: FinishFileUploadPayload) => {
   return http.put("/file-store/finish-upload-file", payload);
 };
+
+export const removeMedia = (ids: number[]) => {
+  http.delete("/file-store", { params: ids });
+};

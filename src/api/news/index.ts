@@ -13,6 +13,10 @@ class NewsApi {
   delete(id: number) {
     return http.delete<void>(`admin/news/${id}`);
   }
+
+  update(id: number, data: any) {
+    return http.patch<any>(`admin/news/${id}`, data);
+  }
 }
 
 export const newsApi = new NewsApi();

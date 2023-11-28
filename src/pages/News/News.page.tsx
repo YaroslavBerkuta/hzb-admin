@@ -58,6 +58,18 @@ export const News = () => {
               <Button onClick={() => deletePost(item.id)} type="dashed">
                 Видалити новину
               </Button>,
+              <Button
+                onClick={() =>
+                  navigate(`/news/create`, {
+                    state: {
+                      mod: "update",
+                      data: item,
+                    },
+                  })
+                }
+              >
+                Редагувати
+              </Button>,
             ]}
             extra={
               <img

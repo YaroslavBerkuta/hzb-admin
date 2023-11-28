@@ -32,7 +32,17 @@ export const Awards = () => {
 
   return (
     <>
-      <Button onClick={() => navigate(`/awards/create`)}>Нова нагорода</Button>
+      <Button
+        onClick={() =>
+          navigate(`/awards/create`, {
+            state: {
+              mod: "create",
+            },
+          })
+        }
+      >
+        Нова нагорода
+      </Button>
 
       <List
         itemLayout="vertical"
@@ -48,6 +58,18 @@ export const Awards = () => {
             actions={[
               <Button onClick={() => removeAwarads(item.id)} type="dashed">
                 Видалити новину
+              </Button>,
+              <Button
+                onClick={() =>
+                  navigate(`/awards/create`, {
+                    state: {
+                      mod: "update",
+                      data: item,
+                    },
+                  })
+                }
+              >
+                Редагувати
               </Button>,
             ]}
             extra={
