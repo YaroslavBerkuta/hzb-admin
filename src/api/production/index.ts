@@ -14,6 +14,10 @@ class ProductionApi {
   delete(id: number) {
     return http.delete<void>(`admin/productions/${id}`);
   }
+
+  update(id: number, data: any) {
+    return http.patch<void>(`admin/productions/${id}`, data);
+  }
 }
 
 export const productionApi = new ProductionApi();

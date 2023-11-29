@@ -32,7 +32,17 @@ export const Projects = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate(`/projects/create`)}>Новий проект</Button>
+      <Button
+        onClick={() =>
+          navigate(`/projects/create`, {
+            state: {
+              mod: "create",
+            },
+          })
+        }
+      >
+        Новий проект
+      </Button>
       <List
         itemLayout="vertical"
         size="default"
@@ -48,6 +58,18 @@ export const Projects = () => {
             actions={[
               <Button onClick={() => remove(item.id)} type="dashed">
                 Видалити новину
+              </Button>,
+              <Button
+                onClick={() =>
+                  navigate(`/projects/create`, {
+                    state: {
+                      mod: "update",
+                      data: item,
+                    },
+                  })
+                }
+              >
+                Редагувати
               </Button>,
             ]}
             extra={

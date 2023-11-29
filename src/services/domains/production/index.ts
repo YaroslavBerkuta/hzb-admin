@@ -31,3 +31,11 @@ const saveFile = async (file: IFile, parentId: number) => {
     console.log("error file:", error);
   }
 };
+
+export const updateProduction = async (id: number, payload: any) => {
+  try {
+    await productionApi.update(id, payload);
+  } catch (error) {
+    message.error("Щось пішло не так");
+  }
+};

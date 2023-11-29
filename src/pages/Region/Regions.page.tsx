@@ -35,7 +35,15 @@ export const Regions = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate(`/regions/create`)}>
+      <Button
+        onClick={() =>
+          navigate(`/regions/create`, {
+            state: {
+              mod: "create",
+            },
+          })
+        }
+      >
         Новий дистрибютор
       </Button>
       <List
@@ -52,13 +60,28 @@ export const Regions = () => {
             <Card
               title={getTranslate(item.translations, Lang.UA).name}
               extra={
-                <Button
-                  type="primary"
-                  size={"large"}
-                  onClick={() => remove(item.id)}
-                >
-                  <DeleteOutlined />
-                </Button>
+                <>
+                  <Button
+                    type="primary"
+                    size={"large"}
+                    onClick={() => remove(item.id)}
+                    style={{ marginRight: 10 }}
+                  >
+                    <DeleteOutlined />
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      navigate(`/regions/create`, {
+                        state: {
+                          mod: "update",
+                          data: item,
+                        },
+                      })
+                    }
+                  >
+                    Редагувати
+                  </Button>
+                </>
               }
             >
               {truncate(getTranslate(item.translations, Lang.UA).description, {

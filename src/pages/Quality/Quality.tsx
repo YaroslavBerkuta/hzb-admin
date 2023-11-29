@@ -28,7 +28,17 @@ export const Quality = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate(`/quality/create`)}>Новий запис</Button>
+      <Button
+        onClick={() =>
+          navigate(`/quality/create`, {
+            state: {
+              mod: "create",
+            },
+          })
+        }
+      >
+        Новий запис
+      </Button>
       <List
         itemLayout="vertical"
         size="default"
@@ -43,6 +53,18 @@ export const Quality = () => {
             actions={[
               <Button onClick={() => removeQuality(item.id)} type="dashed">
                 Видалити новину
+              </Button>,
+              <Button
+                onClick={() =>
+                  navigate(`/quality/create`, {
+                    state: {
+                      mod: "update",
+                      data: item,
+                    },
+                  })
+                }
+              >
+                Редагувати
               </Button>,
             ]}
             extra={

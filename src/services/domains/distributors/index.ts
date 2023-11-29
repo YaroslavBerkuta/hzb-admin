@@ -12,3 +12,13 @@ export const createDistributot = async (data: any) => {
     message.error("Щось пішло не так");
   }
 };
+
+export const updateDistributot = async (id: number, payload: any) => {
+  try {
+    await distributorApi.update(id, payload);
+    message.success("Дистрибюьор оновлений");
+  } catch (error) {
+    console.log(error);
+    message.error("Щось пішло не так");
+  }
+};

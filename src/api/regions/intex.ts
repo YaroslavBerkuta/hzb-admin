@@ -12,6 +12,10 @@ class DistributorApi {
   remove(id: number) {
     return http.delete(`admin/distributors/${id}`);
   }
+
+  update(id: number, data: any) {
+    return http.patch(`admin/distributors/${id}`, data);
+  }
 }
 
 export const distributorApi = new DistributorApi();

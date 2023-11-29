@@ -50,7 +50,6 @@ export const NewsDetails = () => {
         console.log('create')
         await saveNews(values, file);
       } else {
-        console.log('update')
         await updateNews(data.id, values);
       }
       navigate(`/news`);

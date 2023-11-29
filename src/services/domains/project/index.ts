@@ -32,3 +32,12 @@ const saveFile = async (file: IFile, parentId: number) => {
     console.log("error file:", error);
   }
 };
+
+export const updateProject = async (id: number, data: any) => {
+  try {
+    await projectApi.update(id, data);
+  } catch (error) {
+    console.log("news save error:", error);
+    message.error("Щось пішло не так");
+  }
+};

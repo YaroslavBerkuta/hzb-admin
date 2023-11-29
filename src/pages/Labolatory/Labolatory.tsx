@@ -27,7 +27,15 @@ export const Labolatory = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate(`/labolatory/create`)}>
+      <Button
+        onClick={() =>
+          navigate(`/labolatory/create`, {
+            state: {
+              mod: "create",
+            },
+          })
+        }
+      >
         Новий запис
       </Button>
       <List
@@ -44,6 +52,18 @@ export const Labolatory = () => {
             actions={[
               <Button onClick={() => removeLabolatory(item.id)} type="dashed">
                 Видалити новину
+              </Button>,
+              <Button
+                onClick={() =>
+                  navigate(`/labolatory/create`, {
+                    state: {
+                      mod: "update",
+                      data: item,
+                    },
+                  })
+                }
+              >
+                Редагувати
               </Button>,
             ]}
             extra={

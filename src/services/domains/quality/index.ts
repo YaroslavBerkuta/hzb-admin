@@ -32,3 +32,11 @@ const saveFile = async (file: IFile, parentId: number) => {
     console.log("error file:", error);
   }
 };
+
+export const updateQuality = async (id: number, data: any) => {
+  try {
+    await qualityApi.update(id, data);
+  } catch (error) {
+    message.error("Щось пішло не так");
+  }
+};

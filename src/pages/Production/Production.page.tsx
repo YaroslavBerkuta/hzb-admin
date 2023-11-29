@@ -28,7 +28,15 @@ export const Production = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate(`/production/create`)}>
+      <Button
+        onClick={() =>
+          navigate(`/production/create`, {
+            state: {
+              mod: "create",
+            },
+          })
+        }
+      >
         Новий запис
       </Button>
       <List
@@ -45,6 +53,18 @@ export const Production = () => {
             actions={[
               <Button onClick={() => removeAwarads(item.id)} type="dashed">
                 Видалити новину
+              </Button>,
+              <Button
+                onClick={() =>
+                  navigate(`/production/create`, {
+                    state: {
+                      mod: "update",
+                      data: item,
+                    },
+                  })
+                }
+              >
+                Редагувати
               </Button>,
             ]}
             extra={

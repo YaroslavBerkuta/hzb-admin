@@ -16,6 +16,10 @@ class QualityApi {
   remove(id: number) {
     return http.delete(`admin/quality/${id}`);
   }
+
+  update(id: number, data: any) {
+    return http.patch(`admin/quality/${id}`, data);
+  }
 }
 
 export const qualityApi = new QualityApi();

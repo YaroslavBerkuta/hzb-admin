@@ -1,20 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks";
 import { defaultValues } from "./config";
 import { PlusOutlined } from "@ant-design/icons";
 import { LabolatoryForm } from "./components/LabolatoryForm";
 import { Lang } from "../../typing/enums";
 import { Button, Tabs, Upload, UploadProps } from "antd";
-import { labolatoryCreate } from "../../services/domains/labolatory";
+import {
+  labolatoryCreate,
+  updateLabolatory,
+} from "../../services/domains/labolatory";
+import { isEmpty } from "lodash";
 
 export const NewLabolatory = () => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState<any>([]);
 
+  const location = useLocation();
+  const { mod, data } = location.state;
+
   const { setField, onSubmit, values } = useForm<any>(
-    defaultValues,
+    isEmpty(data) ? defaultValues : data,
     () => null
   );
 
@@ -54,7 +61,11 @@ export const NewLabolatory = () => {
 
   const submit = async () => {
     try {
-      await labolatoryCreate(values, fileList);
+      if (mod === "create") {
+        await labolatoryCreate(values, fileList);
+      } else {
+        await updateLabolatory(data.id, values);
+      }
       navigate("/labolatory");
     } catch (error) {
       console.log(error);
@@ -62,13 +73,15 @@ export const NewLabolatory = () => {
   };
   return (
     <div>
-      <Upload
-        listType="picture-card"
-        fileList={fileList}
-        onChange={handleChange}
-      >
-        {fileList.length >= 8 ? null : uploadButton}
-      </Upload>
+      {mod === "create" && (
+        <Upload
+          listType="picture-card"
+          fileList={fileList}
+          onChange={handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+      )}
 
       <Tabs
         defaultActiveKey="1"

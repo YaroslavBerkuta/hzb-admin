@@ -1,24 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks";
 import { CreateProductionForm } from "./components/CreateProductionForm";
 import { Lang } from "../../typing/enums";
 import { Button, Tabs, Upload, UploadProps } from "antd";
 import { defaultValues } from "./config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { createProduction } from "../../services/domains/production/index";
+import {
+  createProduction,
+  updateProduction,
+} from "../../services/domains/production/index";
+import { isEmpty } from "lodash";
 
 export const NewProduction = () => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState<any>([]);
+  const location = useLocation();
+  const { mod, data } = location.state;
 
-  const { setField, onSubmit, values } = useForm(defaultValues, () => null);
+  const { setField, onSubmit, values } = useForm(
+    isEmpty(data) ? defaultValues : data,
+    () => null
+  );
+
+  useEffect(() => {
+    data?.cover &&
+      setFileList(data.cover.map((it: any) => ({ ...it, url: it.fileUrl })));
+  }, [data]);
 
   const submit = async () => {
     try {
-      await createProduction(values, fileList);
-      navigate("/production");
+      if (mod === "create") {
+        await createProduction(values, fileList);
+        navigate("/production");
+      } else {
+        await updateProduction(data.id, values);
+        navigate("/production");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -61,13 +80,15 @@ export const NewProduction = () => {
 
   return (
     <div>
-      <Upload
-        listType="picture-card"
-        fileList={fileList}
-        onChange={handleChange}
-      >
-        {fileList.length >= 8 ? null : uploadButton}
-      </Upload>
+      {!data && (
+        <Upload
+          listType="picture-card"
+          fileList={fileList}
+          onChange={handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+      )}
       <Tabs
         defaultActiveKey="1"
         type="card"
