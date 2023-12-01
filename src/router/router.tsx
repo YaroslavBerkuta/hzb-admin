@@ -20,6 +20,8 @@ import { Awards } from "../pages/Awards/Awards.page";
 import { NewAwards } from "../pages/Awards/NewAwards.page";
 import { NewQuality } from "../pages/Quality/NewQuality";
 import { NewLabolatory } from "../pages/Labolatory/NewLabolatory";
+import { Partner } from "../pages/Partners/Partner.page";
+import { CreatePartner } from "../pages/Partners/CreatePartner.page";
 
 export const Router = () => {
   const user = useSelector(selectAccount);
@@ -50,6 +52,8 @@ export const Router = () => {
         <Route element={<NewQuality />} path="/quality/create" />
         <Route element={<Labolatory />} path="/labolatory" />
         <Route element={<NewLabolatory />} path="/labolatory/create" />
+        <Route element={<Partner />} path="/partners" />
+        <Route element={<CreatePartner />} path="/partners/create" />
       </Routes>
     </Wrapper>
   );

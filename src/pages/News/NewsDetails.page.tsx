@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Tabs, Upload } from "antd";
+import { Button, Tabs, Upload, UploadFile, UploadProps } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NewsForm } from "./components";
 import { useForm } from "../../hooks";
@@ -11,7 +11,8 @@ import { isEmpty } from "lodash";
 import { PlusOutlined } from "@ant-design/icons";
 
 export const NewsDetails = () => {
-  const [file, setFile] = useState<any>(null);
+  const [file, setFile] = useState<UploadFile[]>([]);
+  const [removeFile, setRemoveFile] = useState<any[]>([]);
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -19,7 +20,9 @@ export const NewsDetails = () => {
 
   useEffect(() => {
     data?.cover &&
-      setFile(data.cover.map((it: any) => ({ ...it, url: it.fileUrl })));
+      setFile(
+        data.cover.map((it: any) => ({ ...it, uid: it.id, url: it.fileUrl }))
+      );
   }, [data]);
 
   const { setField, onSubmit, values } = useForm(
@@ -44,13 +47,16 @@ export const NewsDetails = () => {
     },
   ];
 
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    setFile(newFileList);
+
   const submit = async () => {
     try {
       if (mod === "create") {
         console.log('create')
         await saveNews(values, file);
       } else {
-        await updateNews(data.id, values);
+        await updateNews(data.id, values, removeFile, file[0]?.originFileObj);
       }
       navigate(`/news`);
     } catch (error) {
@@ -69,10 +75,10 @@ export const NewsDetails = () => {
     <div>
       <Upload
         multiple={true}
+        fileList={file}
         listType="picture-card"
-        onChange={({ file }) => {
-          setFile(file.originFileObj);
-        }}
+        onRemove={(e) => setRemoveFile((prev) => [...prev, e.uid])}
+        onChange={handleChange}
       >
         {!isEmpty(file) ? null : uploadButton}
       </Upload>

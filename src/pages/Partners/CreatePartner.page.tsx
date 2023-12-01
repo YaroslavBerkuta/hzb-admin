@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Tabs, Upload, UploadFile, UploadProps } from "antd";
 import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
-import { CreateAwardsForm } from "./components/createAwardsForm";
-import { Lang } from "../../typing/enums";
-import { useForm } from "../../hooks";
-import { saveAwards, updateAwards } from "../../services/domains/awards/index";
-import { defaultValue } from "./config";
 import { useLocation, useNavigate } from "react-router-dom";
-export const NewAwards = () => {
+import { useForm } from "../../hooks";
+import { defaultValue } from "./config";
+import { PartnerForm } from "./components";
+import { Lang } from "../../typing/enums";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Input, Tabs, Upload, UploadFile, UploadProps } from "antd";
+import { savePartner, updatePartner } from "../../services/domains/partner";
+
+export const CreatePartner = () => {
   const [file, setFile] = useState<UploadFile[]>([]);
   const [removeFile, setRemoveFile] = useState<any[]>([]);
   const navigate = useNavigate();
@@ -22,9 +22,6 @@ export const NewAwards = () => {
     () => null
   );
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-    setFile(newFileList);
-
   useEffect(() => {
     data?.cover &&
       setFile(
@@ -32,19 +29,12 @@ export const NewAwards = () => {
       );
   }, [data]);
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
-
   const items = [
     {
       label: "Українська",
       key: "ua",
       children: (
-        <CreateAwardsForm
+        <PartnerForm
           defaultValues={values}
           setField={setField}
           lang={Lang.UA}
@@ -55,7 +45,7 @@ export const NewAwards = () => {
       label: "Англійська",
       key: "en",
       children: (
-        <CreateAwardsForm
+        <PartnerForm
           defaultValues={values}
           setField={setField}
           lang={Lang.EN}
@@ -64,20 +54,28 @@ export const NewAwards = () => {
     },
   ];
 
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    setFile(newFileList);
+
   const submit = async () => {
     try {
       if (mod === "create") {
-        console.log("create");
-        await saveAwards(values, file);
+        await savePartner(values, file[0].originFileObj);
       } else {
-        console.log("update");
-        await updateAwards(data.id, values, removeFile, file[0]?.originFileObj);
+        await updatePartner(data.id, values, removeFile, file[0]?.originFileObj);
       }
-      navigate(`/awards`);
+      navigate(`/partners`);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
   return (
     <div>
@@ -90,6 +88,12 @@ export const NewAwards = () => {
       >
         {!isEmpty(file) ? null : uploadButton}
       </Upload>
+      <Input
+        name="link"
+        placeholder="ссилка на партнера"
+        defaultValue={values.link}
+        onChange={(e) => setField("link", e.target.value)}
+      />
       <Tabs
         defaultActiveKey="1"
         type="card"

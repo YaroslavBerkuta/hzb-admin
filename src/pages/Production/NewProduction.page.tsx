@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks";
 import { CreateProductionForm } from "./components/CreateProductionForm";
 import { Lang } from "../../typing/enums";
-import { Button, Tabs, Upload, UploadProps } from "antd";
+import { Button, Tabs, Upload, UploadFile, UploadProps } from "antd";
 import { defaultValues } from "./config";
 import { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
@@ -15,7 +15,8 @@ import { isEmpty } from "lodash";
 
 export const NewProduction = () => {
   const navigate = useNavigate();
-  const [fileList, setFileList] = useState<any>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [removeFile, setRemoveFile] = useState<any[]>([]);
   const location = useLocation();
   const { mod, data } = location.state;
 
@@ -26,7 +27,9 @@ export const NewProduction = () => {
 
   useEffect(() => {
     data?.cover &&
-      setFileList(data.cover.map((it: any) => ({ ...it, url: it.fileUrl })));
+      setFileList(
+        data.cover.map((it: any) => ({ ...it, uid: it.id, url: it.fileUrl }))
+      );
   }, [data]);
 
   const submit = async () => {
@@ -35,7 +38,7 @@ export const NewProduction = () => {
         await createProduction(values, fileList);
         navigate("/production");
       } else {
-        await updateProduction(data.id, values);
+        await updateProduction(data.id, values, removeFile, fileList);
         navigate("/production");
       }
     } catch (error) {
@@ -80,15 +83,15 @@ export const NewProduction = () => {
 
   return (
     <div>
-      {!data && (
-        <Upload
-          listType="picture-card"
-          fileList={fileList}
-          onChange={handleChange}
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
-      )}
+      <Upload
+        multiple={true}
+        fileList={fileList}
+        listType="picture-card"
+        onRemove={(e) => setRemoveFile((prev) => [...prev, e.uid])}
+        onChange={handleChange}
+      >
+        {uploadButton}
+      </Upload>
       <Tabs
         defaultActiveKey="1"
         type="card"

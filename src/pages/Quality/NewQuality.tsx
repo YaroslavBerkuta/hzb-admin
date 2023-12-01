@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "../../hooks";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Tabs, Upload, UploadProps } from "antd";
@@ -13,6 +13,7 @@ import { isEmpty } from "lodash";
 export const NewQuality = () => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState<any>([]);
+  const [removeFile, setRemoveFile] = useState<any[]>([]);
 
   const location = useLocation();
   const { mod, data } = location.state;
@@ -29,6 +30,13 @@ export const NewQuality = () => {
     </div>
   );
 
+  useEffect(() => {
+    data?.cover &&
+      setFileList(
+        data.cover.map((it: any) => ({ ...it, uid: it.id, url: it.fileUrl }))
+      );
+  }, [data]);
+
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
     setFileList(newFileList);
 
@@ -37,7 +45,7 @@ export const NewQuality = () => {
       if (mod === "create") {
         await createQuality(values, fileList);
       } else {
-        await updateQuality(data.id, values);
+        await updateQuality(data.id, values, removeFile, fileList);
       }
       navigate("/quality");
     } catch (error) {
@@ -72,15 +80,14 @@ export const NewQuality = () => {
 
   return (
     <div>
-      {mod === "create" && (
-        <Upload
-          listType="picture-card"
-          fileList={fileList}
-          onChange={handleChange}
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
-      )}
+      <Upload
+        listType="picture-card"
+        fileList={fileList}
+        onRemove={(e) => setRemoveFile((prev) => [...prev, e.uid])}
+        onChange={handleChange}
+      >
+        {fileList.length >= 8 ? null : uploadButton}
+      </Upload>
 
       <Tabs
         defaultActiveKey="1"

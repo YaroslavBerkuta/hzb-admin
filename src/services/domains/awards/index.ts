@@ -1,6 +1,7 @@
 import {
   finishUploadLinkReq,
   getUploadLinkReq,
+  removeMedia,
 } from "./../../../api/media/index";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { message } from "antd";
@@ -22,9 +23,21 @@ export const saveAwards = async (params: any, file: any) => {
   }
 };
 
-export const updateAwards = async (id: number, params: any) => {
+export const updateAwards = async (
+  id: number,
+  params: any,
+  removeFile: any[],
+  file: any
+) => {
   try {
     await awardsApi.update(id, params);
+
+    if (removeFile.length > 0) {
+      await removesFile(removeFile);
+    }
+    if (file) {
+      await saveFile(file, id);
+    }
   } catch (error) {
     console.log("news save error:", error);
     message.error("Щось пішло не так");
@@ -41,5 +54,14 @@ const saveFile = async (file: IFile, parentId: number) => {
     );
   } catch (error) {
     console.log("error file:", error);
+  }
+};
+
+const removesFile = async (ids: any[]) => {
+  try {
+    await removeMedia(ids);
+  } catch (error) {
+    console.log("news save error:", error);
+    message.error("Щось пішло не так");
   }
 };

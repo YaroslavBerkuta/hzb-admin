@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks";
 import { defaultValues } from "./config";
@@ -16,6 +16,7 @@ import { isEmpty } from "lodash";
 export const NewLabolatory = () => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState<any>([]);
+  const [removeFile, setRemoveFile] = useState<any[]>([]);
 
   const location = useLocation();
   const { mod, data } = location.state;
@@ -24,6 +25,13 @@ export const NewLabolatory = () => {
     isEmpty(data) ? defaultValues : data,
     () => null
   );
+
+  useEffect(() => {
+    data?.cover &&
+      setFileList(
+        data.cover.map((it: any) => ({ ...it, uid: it.id, url: it.fileUrl }))
+      );
+  }, [data]);
 
   const uploadButton = (
     <div>
@@ -64,7 +72,7 @@ export const NewLabolatory = () => {
       if (mod === "create") {
         await labolatoryCreate(values, fileList);
       } else {
-        await updateLabolatory(data.id, values);
+        await updateLabolatory(data.id, values, removeFile, fileList);
       }
       navigate("/labolatory");
     } catch (error) {
@@ -73,15 +81,14 @@ export const NewLabolatory = () => {
   };
   return (
     <div>
-      {mod === "create" && (
-        <Upload
-          listType="picture-card"
-          fileList={fileList}
-          onChange={handleChange}
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
-      )}
+      <Upload
+        listType="picture-card"
+        fileList={fileList}
+        onRemove={(e) => setRemoveFile((prev) => [...prev, e.uid])}
+        onChange={handleChange}
+      >
+        {fileList.length >= 8 ? null : uploadButton}
+      </Upload>
 
       <Tabs
         defaultActiveKey="1"

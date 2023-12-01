@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Tabs, Upload } from "antd";
+import { Button, Tabs, Upload, UploadFile, UploadProps } from "antd";
 import { isEmpty } from "lodash";
 import { ProjectForm } from "./components/ProjectForm";
 import { Lang } from "../../typing/enums";
@@ -11,7 +11,9 @@ import { defaultValues } from "./config";
 import { createProject, updateProject } from "../../services/domains/project";
 
 export const NewProject = () => {
-  const [file, setFile] = useState<any>(null);
+  const [file, setFile] = useState<UploadFile[]>([]);
+  const [removeFile, setRemoveFile] = useState<any[]>([]);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { mod, data } = location.state;
@@ -21,12 +23,21 @@ export const NewProject = () => {
     () => null
   );
 
+  useEffect(() => {
+    data?.cover &&
+      setFile(
+        data.cover.map((it: any) => ({ ...it, uid: it.id, url: it.fileUrl }))
+      );
+  }, [data]);
+
   const uploadButton = (
     <div>
       <PlusOutlined />
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    setFile(newFileList);
 
   const submit = async () => {
     try {
@@ -34,7 +45,12 @@ export const NewProject = () => {
         await createProject(values, file);
         navigate("/projects");
       } else {
-        await updateProject(data.id, values);
+        await updateProject(
+          data.id,
+          values,
+          removeFile,
+          file[0]?.originFileObj
+        );
         navigate("/projects");
       }
     } catch (error) {
@@ -69,17 +85,15 @@ export const NewProject = () => {
 
   return (
     <div>
-      {mod === "create" && (
-        <Upload
-          multiple={true}
-          listType="picture-card"
-          onChange={({ file }) => {
-            setFile(file.originFileObj);
-          }}
-        >
-          {!isEmpty(file) ? null : uploadButton}
-        </Upload>
-      )}
+      <Upload
+        multiple={true}
+        fileList={file}
+        listType="picture-card"
+        onRemove={(e) => setRemoveFile((prev) => [...prev, e.uid])}
+        onChange={handleChange}
+      >
+        {!isEmpty(file) ? null : uploadButton}
+      </Upload>
 
       <Tabs
         defaultActiveKey="1"

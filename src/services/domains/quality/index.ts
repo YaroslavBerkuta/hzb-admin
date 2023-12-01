@@ -3,7 +3,11 @@ import { message } from "antd";
 import { qualityApi } from "../../../api/quality";
 import { presignedUploaderService } from "../../system/files.service";
 import { IFile } from "../../../typing";
-import { finishUploadLinkReq, getUploadLinkReq } from "../../../api/media";
+import {
+  finishUploadLinkReq,
+  getUploadLinkReq,
+  removeMedia,
+} from "../../../api/media";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export const createQuality = async (param: any, files: any[]) => {
@@ -33,10 +37,32 @@ const saveFile = async (file: IFile, parentId: number) => {
   }
 };
 
-export const updateQuality = async (id: number, data: any) => {
+export const updateQuality = async (
+  id: number,
+  data: any,
+  removeFile: any[],
+  file: any[]
+) => {
   try {
     await qualityApi.update(id, data);
+    if (removeFile.length > 0) {
+      await removesFile(removeFile);
+    }
+    if (file.length > 0) {
+      for await (const i of file) {
+        await saveFile(i.originFileObj, data.id);
+      }
+    }
   } catch (error) {
+    message.error("Щось пішло не так");
+  }
+};
+
+const removesFile = async (ids: any[]) => {
+  try {
+    await removeMedia(ids);
+  } catch (error) {
+    console.log("news save error:", error);
     message.error("Щось пішло не так");
   }
 };

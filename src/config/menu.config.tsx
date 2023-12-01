@@ -1,6 +1,7 @@
 import {
   CheckOutlined,
   ContainerOutlined,
+  CopyOutlined,
   FullscreenOutlined,
   OrderedListOutlined,
   RocketOutlined,
@@ -33,6 +34,12 @@ export const menuConfig = [
     key: "regions",
     path: "regions",
     icon: <FullscreenOutlined />,
+  },
+  {
+    label: "Партнери",
+    key: "partners",
+    path: "partners",
+    icon: <CopyOutlined />,
   },
   {
     label: "Виробничі потужності",
