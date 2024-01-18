@@ -5,6 +5,7 @@ import {
   FullscreenOutlined,
   OrderedListOutlined,
   RocketOutlined,
+  ShoppingCartOutlined,
   SmileOutlined,
   StockOutlined,
   UnorderedListOutlined,
@@ -16,6 +17,12 @@ export const menuConfig = [
     key: "pages",
     path: "pages",
     icon: <ContainerOutlined />,
+  },
+  {
+    label: "Товари",
+    key: "products",
+    path: "products",
+    icon: <ShoppingCartOutlined />,
   },
   {
     label: "Новини",

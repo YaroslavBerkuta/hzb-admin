@@ -3,7 +3,7 @@ import { Lang } from "../../../typing/enums";
 import { FC } from "react";
 import { find } from "lodash";
 import { Input } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { Editor } from "@tinymce/tinymce-react";
 
 interface IProps {
   defaultValues: any;
@@ -11,7 +11,11 @@ interface IProps {
   lang: Lang;
 }
 
-export const LabolatoryForm: FC<IProps> = ({ defaultValues, setField, lang }) => {
+export const LabolatoryForm: FC<IProps> = ({
+  defaultValues,
+  setField,
+  lang,
+}) => {
   const onChange = (val: string, key: string) => {
     setField(
       "translations",
@@ -31,16 +35,23 @@ export const LabolatoryForm: FC<IProps> = ({ defaultValues, setField, lang }) =>
         }
         onChange={(e) => onChange(e.target.value, "name")}
       />
-      <TextArea
-        name="description"
-        placeholder="Опис"
-        defaultValue={
+      <Editor
+        apiKey="0q4u8e72jrvy87zmkquxbnf2s4zk5w6kb13l1fpezqcoq2ur"
+        initialValue={
           find(defaultValues.translations, (el) => el.lang === lang)
             ?.description
         }
-        rows={10}
-        style={{ marginTop: 20 }}
-        onChange={(e) => onChange(e.target.value, "description")}
+        init={{
+          branding: false,
+          height: 330,
+          menubar: false,
+          plugins:
+            "print preview paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern",
+          toolbar:
+            "formatselect | bold italic underline strikethrough | forecolor backcolor blockquote | link image media | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat",
+          image_advtab: true,
+        }}
+        onChange={(e) => onChange(e.target.getContent(), "description")}
       />
     </div>
   );

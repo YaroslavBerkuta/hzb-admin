@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { NavBar } from "../NavBar/NavBar.component";
-import { Layout } from "antd";
-import Sider from "antd/es/layout/Sider";
+import { Layout, theme } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 
 import styles from "./index.module.scss";
@@ -11,28 +10,30 @@ interface IPrpos {
 }
 
 export const Wrapper: FC<IPrpos> = ({ children }) => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
   return (
     <Layout>
-      <Sider breakpoint="lg" collapsedWidth="0">
+      <Header style={{ display: "flex", alignItems: "center" }}>
         <div className={styles.logo}> HZB Admin Panel</div>
         <NavBar />
-      </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: "white" }} />
-        <Content style={{ margin: "24px 16px 0" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "white",
-              height: "100%",
-            }}
-          >
-            {children}
-          </div>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>©2023 Creatory Studio</Footer>
-      </Layout>
+      </Header>
+      <Content style={{ padding: "0 48px" }}>
+        <div
+          style={{
+            background: colorBgContainer,
+            minHeight: "85vh",
+            padding: 24,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          {children}
+        </div>
+      </Content>
+      <Footer style={{ textAlign: "center" }}>
+        HZB ADMIN ©{new Date().getFullYear()} Created by Creatory Studio
+      </Footer>
     </Layout>
   );
 };

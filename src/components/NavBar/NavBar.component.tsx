@@ -9,7 +9,8 @@ export const NavBar = () => {
       items={menuConfig}
       onClick={(e) => navigate(e.key, {})}
       theme="dark"
-      mode="inline"
+      mode="horizontal"
+      style={{ flex: 1, minWidth: 0 }}
     />
   );
 };

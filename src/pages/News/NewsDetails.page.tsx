@@ -53,7 +53,6 @@ export const NewsDetails = () => {
   const submit = async () => {
     try {
       if (mod === "create") {
-        console.log('create')
         await saveNews(values, file);
       } else {
         await updateNews(data.id, values, removeFile, file[0]?.originFileObj);
