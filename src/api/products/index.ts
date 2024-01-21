@@ -8,7 +8,7 @@ class ProductApi {
   }
 
   getList(params: any) {
-    return http.get<any>("admin/products/list", { params });
+    return http.get<any>("admin/products/list", params);
   }
 
   update(id: number, data: any) {

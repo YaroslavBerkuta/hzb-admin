@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Card, Flex, Pagination, message } from "antd";
+import { Button, Card, Flex, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useFlatList } from "../../hooks";
 import { productApi } from "../../api/products";
@@ -8,9 +8,10 @@ import { Lang } from "../../typing/enums";
 
 export const Products = () => {
   const navigate = useNavigate();
-  const { items, count, resetFlatList } = useFlatList({
+  const { items, resetFlatList } = useFlatList({
     fetchItems: productApi.getList,
     needInit: true,
+    limit: 1000000,
   });
 
   const remove = async (id: number) => {
@@ -37,11 +38,11 @@ export const Products = () => {
       >
         Додати товар
       </Button>
-      <Pagination defaultCurrent={1} total={count} style={{ marginTop: 40 }} />
+
       <Flex
         wrap="wrap"
         gap="small"
-        style={{ marginTop: 20, justifyContent: "space-between" }}
+        style={{ marginTop: 40, justifyContent: "space-between" }}
       >
         {items.map((it: any) => (
           <Card
