@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useForm } from "../../hooks";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Tabs, Upload, UploadFile, UploadProps } from "antd";
+import { Button, Input, Tabs, Upload, UploadFile, UploadProps } from "antd";
 import { isEmpty } from "lodash";
 import { ProjectForm } from "./components/ProjectForm";
 import { Lang } from "../../typing/enums";
@@ -14,7 +14,6 @@ export const NewProject = () => {
   const [file, setFile] = useState<UploadFile[]>([]);
   const [removeFile, setRemoveFile] = useState<any[]>([]);
 
-  const navigate = useNavigate();
   const location = useLocation();
   const { mod, data } = location.state;
 
@@ -43,7 +42,6 @@ export const NewProject = () => {
     try {
       if (mod === "create") {
         await createProject(values, file);
-        navigate("/projects");
       } else {
         await updateProject(
           data.id,
@@ -51,7 +49,6 @@ export const NewProject = () => {
           removeFile,
           file[0]?.originFileObj
         );
-        navigate("/projects");
       }
     } catch (error) {
       console.log(error);
@@ -94,6 +91,14 @@ export const NewProject = () => {
       >
         {!isEmpty(file) ? null : uploadButton}
       </Upload>
+
+      <Input
+        name="years"
+        placeholder="Роки"
+        style={{ maxWidth: 400, marginTop: 40 }}
+        defaultValue={values.years}
+        onChange={(e) => setField("years", e.target.value)}
+      />
 
       <Tabs
         defaultActiveKey="1"

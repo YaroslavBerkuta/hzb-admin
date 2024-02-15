@@ -19,6 +19,10 @@ class ProjectApi {
   update(id: number, data: any) {
     return http.patch(`admin/projects/${id}`, data);
   }
+
+  removeProduction(id: number) {
+    return http.delete(`admin/projects/production/${id}`);
+  }
 }
 
 export const projectApi = new ProjectApi();

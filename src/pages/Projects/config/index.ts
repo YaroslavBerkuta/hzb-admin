@@ -1,16 +1,19 @@
 import { Lang } from "../../../typing/enums";
 
 export const defaultValues = {
+  years: "",
   translations: [
     {
       lang: Lang.EN,
       name: "",
-      description: "",
+      sity: "",
+      info: [{ description: "", title: "" }],
     },
     {
       lang: Lang.UA,
       name: "",
-      description: "",
+      sity: "",
+      info: [{ description: "", title: "" }],
     },
   ],
 };
