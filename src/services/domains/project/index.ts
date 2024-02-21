@@ -26,10 +26,15 @@ export const createProject = async (params: any, file: any) => {
 
 const saveFile = async (file: IFile, parentId: number) => {
   try {
+    console.log("file:", file);
     await presignedUploaderService.upload(
       file,
       (params: any) =>
-        getUploadLinkReq({ ...params, directory: "projects", parentId }),
+        getUploadLinkReq({
+          ...params,
+          directory: "projects",
+          parentId,
+        }),
       (params: any) => finishUploadLinkReq(params)
     );
   } catch (error) {
@@ -46,7 +51,7 @@ export const updateProject = async (
   try {
     await projectApi.update(id, data);
     if (removeFile.length > 0) {
-      await removesFile(removeFile)
+      await removesFile(removeFile);
     }
     if (file) {
       await saveFile(file, id);

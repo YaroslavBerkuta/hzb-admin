@@ -41,7 +41,7 @@ export const NewProject = () => {
   const submit = async () => {
     try {
       if (mod === "create") {
-        await createProject(values, file);
+        await createProject(values, file[0]?.originFileObj);
       } else {
         await updateProject(
           data.id,

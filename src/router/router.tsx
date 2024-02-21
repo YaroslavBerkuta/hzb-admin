@@ -24,6 +24,8 @@ import { NewLabolatory } from "../pages/Labolatory/NewLabolatory";
 import { Partner } from "../pages/Partners/Partner.page";
 import { CreatePartner } from "../pages/Partners/CreatePartner.page";
 import { CreateProduct } from "../pages/Products/CreateProduct.page";
+import { Categories } from "../pages/Categories/Categories.page";
+import { CreateCategory } from "../pages/Categories/CreateCategory.page";
 
 export const Router = () => {
   const user = useSelector(selectAccount);
@@ -58,6 +60,8 @@ export const Router = () => {
         <Route element={<CreatePartner />} path="/partners/create" />
         <Route element={<Products />} path="/products" />
         <Route element={<CreateProduct />} path="/products/create" />
+        <Route element={<Categories />} path="/category" />
+        <Route element={<CreateCategory />} path="/category/create" />
       </Routes>
     </Wrapper>
   );

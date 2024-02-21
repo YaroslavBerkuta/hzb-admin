@@ -19,6 +19,12 @@ export const menuConfig = [
     icon: <ContainerOutlined />,
   },
   {
+    label: "Категорії товарів",
+    key: "category",
+    path: "category",
+    icon: <ShoppingCartOutlined />,
+  },
+  {
     label: "Товари",
     key: "products",
     path: "products",
