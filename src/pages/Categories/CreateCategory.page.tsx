@@ -32,7 +32,7 @@ const defaultValue = {
       name: "",
     },
   ],
-  parentId: null,
+  parentId: "Виберіть батьківську категорію",
 };
 
 export const CreateCategory = () => {
@@ -49,6 +49,7 @@ export const CreateCategory = () => {
   );
 
   useEffect(() => {
+    console.log("data:", data);
     data?.cover &&
       setCover(
         data.cover.map((it: any) => ({
@@ -77,7 +78,7 @@ export const CreateCategory = () => {
           name: it.fileName,
         }))
       );
-  }, [data.catalog, data.cover, data.price]);
+  }, [data?.catalog, data?.cover, data?.price]);
 
   const uploadButton = (
     <div>
@@ -107,7 +108,7 @@ export const CreateCategory = () => {
           catalog[0]?.originFileObj,
           cover[0]?.originFileObj
         );
-        navigate("category");
+        navigate("/category");
       } else {
         await updateCategory(
           data?.id,
@@ -117,7 +118,7 @@ export const CreateCategory = () => {
           cover[0]?.originFileObj,
           removeFiles
         );
-        navigate("category");
+        navigate("/category");
       }
     } catch (error) {
       console.log(error);
@@ -192,7 +193,7 @@ export const CreateCategory = () => {
           Батьківська категорія:
         </p>
         <SelectCategory
-          defaultValue={"Виберіть батьківську категорію"}
+          defaultValue={String(values.parentId)}
           setValue={(val: string) => setField("parentId", Number(val))}
         />
       </div>
