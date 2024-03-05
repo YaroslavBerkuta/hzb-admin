@@ -1,7 +1,7 @@
 import { Lang } from "../../../typing/enums";
 
 export const defaultValues = {
-  categoryId: '81',
+  categoryId: 'Виберіть батьківську категорію',
   translations: [
     {
       lang: Lang.EN,

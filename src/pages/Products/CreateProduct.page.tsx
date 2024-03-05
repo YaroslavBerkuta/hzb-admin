@@ -96,7 +96,7 @@ export const CreateProduct = () => {
       <div>
         <p style={{ fontWeight: 600, fontSize: 20, margin: 20 }}>Категорія:</p>
         <SelectCategory
-          defaultValue={String(values.categoryId)}
+          defaultValue={String(values.productCategory[0].categoryId)}
           setValue={(val: string) => setField("categoryId", Number(val))}
         />
       </div>
