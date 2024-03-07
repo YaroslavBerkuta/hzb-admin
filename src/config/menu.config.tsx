@@ -3,6 +3,7 @@ import {
   ContainerOutlined,
   CopyOutlined,
   FullscreenOutlined,
+  InstagramOutlined,
   OrderedListOutlined,
   RocketOutlined,
   ShoppingCartOutlined,
@@ -77,5 +78,11 @@ export const menuConfig = [
     key: "labolatory",
     path: "labolatory",
     icon: <RocketOutlined />,
+  },
+  {
+    label: "Instagram",
+    key: "instagram",
+    path: "instagram",
+    icon: <InstagramOutlined />,
   },
 ];

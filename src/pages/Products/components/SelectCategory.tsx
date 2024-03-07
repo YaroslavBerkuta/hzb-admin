@@ -30,7 +30,9 @@ export const SelectCategory: FC<{
   const onChange = (value: string) => {
     setValue(value);
   };
-  const onSearch = (value: string) => {};
+  const onSearch = (value: string) => {
+    console.log(value);
+  };
   const filterOption = (
     input: string,
     option?: { label: string; value: string }

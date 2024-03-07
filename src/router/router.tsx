@@ -26,6 +26,8 @@ import { CreatePartner } from "../pages/Partners/CreatePartner.page";
 import { CreateProduct } from "../pages/Products/CreateProduct.page";
 import { Categories } from "../pages/Categories/Categories.page";
 import { CreateCategory } from "../pages/Categories/CreateCategory.page";
+import { Instagram } from "../pages/Instagram/Instagram.page";
+import { InstagramCreate } from "../pages/Instagram/InstagramCreate.page";
 
 export const Router = () => {
   const user = useSelector(selectAccount);
@@ -62,6 +64,8 @@ export const Router = () => {
         <Route element={<CreateProduct />} path="/products/create" />
         <Route element={<Categories />} path="/category" />
         <Route element={<CreateCategory />} path="/category/create" />
+        <Route element={<Instagram />} path="/instagram" />
+        <Route element={<InstagramCreate />} path="/instagram/create" />
       </Routes>
     </Wrapper>
   );
