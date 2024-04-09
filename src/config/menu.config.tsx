@@ -44,7 +44,7 @@ export const menuConfig = [
     icon: <SmileOutlined />,
   },
   {
-    label: "Дистрибютори",
+    label: "Дистриб\'ютори",
     key: "regions",
     path: "regions",
     icon: <FullscreenOutlined />,
@@ -74,7 +74,7 @@ export const menuConfig = [
     icon: <CheckOutlined />,
   },
   {
-    label: "Випробувальна Лаболаторія",
+    label: "Випробувальна Лабораторія",
     key: "labolatory",
     path: "labolatory",
     icon: <RocketOutlined />,

@@ -26,7 +26,7 @@ export const Regions = () => {
     try {
       await distributorApi.remove(id);
       resetFlatList();
-      message.success("Дистрибютора видалено");
+      message.success("Дистриб\'ютора видалено");
     } catch (error) {
       console.log(error);
       message.error("Щось пішло не так");
@@ -36,6 +36,7 @@ export const Regions = () => {
   return (
     <div>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/regions/create`, {
             state: {
@@ -44,7 +45,7 @@ export const Regions = () => {
           })
         }
       >
-        Новий дистрибютор
+        Новий дистриб'ютор
       </Button>
       <List
         style={{ marginTop: 20 }}

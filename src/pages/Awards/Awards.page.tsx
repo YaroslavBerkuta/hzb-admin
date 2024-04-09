@@ -33,6 +33,7 @@ export const Awards = () => {
   return (
     <>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/awards/create`, {
             state: {

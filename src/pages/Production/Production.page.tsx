@@ -29,6 +29,7 @@ export const Production = () => {
   return (
     <div>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/production/create`, {
             state: {

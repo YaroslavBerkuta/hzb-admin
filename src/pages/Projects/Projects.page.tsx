@@ -33,6 +33,7 @@ export const Projects = () => {
   return (
     <div>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/projects/create`, {
             state: {

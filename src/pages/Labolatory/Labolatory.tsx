@@ -28,6 +28,7 @@ export const Labolatory = () => {
   return (
     <div>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/labolatory/create`, {
             state: {

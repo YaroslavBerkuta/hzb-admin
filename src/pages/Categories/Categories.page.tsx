@@ -24,7 +24,7 @@ export const Categories = () => {
   const remove = async (id: number) => {
     try {
       await categoriesApi.remove(id);
-      message.success("Категорію видаленно");
+      message.success("Категорію видалено");
       resetFlatList();
     } catch (error) {
       message.error("Щось пішло не так");
@@ -34,6 +34,7 @@ export const Categories = () => {
   return (
     <div>
       <Button
+        type="primary"
         onClick={() =>
           navigate("/category/create", {
             state: {

@@ -32,6 +32,7 @@ export const News = () => {
   return (
     <>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/news/create`, {
             state: {

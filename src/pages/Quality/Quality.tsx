@@ -29,6 +29,7 @@ export const Quality = () => {
   return (
     <div>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/quality/create`, {
             state: {

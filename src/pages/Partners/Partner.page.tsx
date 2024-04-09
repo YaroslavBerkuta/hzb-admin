@@ -30,6 +30,7 @@ export const Partner = () => {
   return (
     <>
       <Button
+        type="primary"
         onClick={() =>
           navigate(`/partners/create`, {
             state: {

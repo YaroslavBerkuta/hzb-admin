@@ -6,7 +6,7 @@ import { distributorApi } from "../../../api/regions/intex";
 export const createDistributot = async (data: any) => {
   try {
     await distributorApi.store(data);
-    message.success("Дистрибюьор створений");
+    message.success("Дистриб\'ютор створений");
   } catch (error) {
     console.log(error);
     message.error("Щось пішло не так");
@@ -16,7 +16,7 @@ export const createDistributot = async (data: any) => {
 export const updateDistributot = async (id: number, payload: any) => {
   try {
     await distributorApi.update(id, payload);
-    message.success("Дистрибюьор оновлений");
+    message.success("Дистриб\'ютор оновлений");
   } catch (error) {
     console.log(error);
     message.error("Щось пішло не так");

@@ -15,7 +15,7 @@ export const Instagram = () => {
     try {
       await instagramApi.remove(id);
       resetFlatList();
-      message.success("Пост видаленно");
+      message.success("Пост видалено");
     } catch (error) {
       message.error("Сталась помилка");
     }
